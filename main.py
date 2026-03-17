@@ -10,10 +10,32 @@ class ModelName(str, Enum):
 
 app = FastAPI()
 
+
 """
-response_class： 响应类型 比如html, json
-response_model: 响应模型，规定了返回的数据类型，并对返回的数据进行校验
+# 中间件 middleware
+# 中间件是为了每个请求添加统一的处理逻辑（记录日志，身份验证，跨域，设置响应头，性能监控等）
+# 要注意中间件的执行顺序是自下而上的，就是在代码文件中谁在下面先执行谁 ：D
+# call_next(request) 会调用下一个中间件，如果没有下一个中间件，就会调用实际的请求处理函数
+@app.middleware("http")
+async def middleware1(request, call_next):
+    print("Middleware 1 start")
+    response = await call_next(request)
+    print("Middleware 1 end")
+    return response
+
+@app.middleware("http")
+async def middleware2(request, call_next):
+    print("Middleware 2 start")
+    response = await call_next(request)
+    print("Middleware 2 end")
+    return response
 """
+
+"""
+
+#response_class： 响应类型 比如html, json
+#response_model: 响应模型，规定了返回的数据类型，并对返回的数据进行校验
+
 # 响应类型 HTML 格式
 @app.get("/html", response_class=HTMLResponse)
 async def get_html():
@@ -54,7 +76,7 @@ async def get_news(id: int):
 # @app.post("/register")
 # async def register(user:User):
 #     return {"username": user.username, "password": user.password}
-
+"""
 
 
 

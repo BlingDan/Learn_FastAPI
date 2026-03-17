@@ -1,7 +1,7 @@
 ## 运行
 
 ```
-python -m uvicorn main:app --reload
+uv run uvicorn main:app --reload
 ```
 
 ## reference
